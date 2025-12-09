@@ -8,15 +8,9 @@ interface AIRecommendationsProps {
 }
 
 const impactColors = {
-  high: 'bg-red-100 text-red-800 border-red-300',
-  medium: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-  low: 'bg-green-100 text-green-800 border-green-300',
-};
-
-const impactIcons = {
-  high: '🔥',
-  medium: '⚡',
-  low: '✨',
+  high: 'bg-red-50 text-red-800 border-red-200',
+  medium: 'bg-yellow-50 text-yellow-800 border-yellow-200',
+  low: 'bg-green-50 text-green-800 border-green-200',
 };
 
 export default function AIRecommendations({ recommendations }: AIRecommendationsProps) {
@@ -36,11 +30,11 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
   if (!showRecommendations) {
     return (
       <div className="w-full max-w-4xl mx-auto mt-8">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-200">
+        <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-4">
               <svg
-                className="w-8 h-8 text-white"
+                className="w-8 h-8 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -53,7 +47,7 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
               AI-Powered Automation Insights
             </h2>
             <p className="text-gray-600 mb-6 max-w-xl mx-auto">
@@ -64,11 +58,10 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
               onClick={handleGenerate}
               disabled={isGenerating}
               className={`
-                px-8 py-3 rounded-lg font-semibold text-white text-lg
-                transition-all transform
+                px-8 py-3 rounded-xl font-medium text-white text-base transition-colors
                 ${isGenerating
                   ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700 hover:scale-105 active:scale-95'
+                  : 'bg-blue-600 hover:bg-blue-700'
                 }
               `}
             >
@@ -93,7 +86,7 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
                   Analyzing Process...
                 </span>
               ) : (
-                '🤖 Generate AI Recommendations'
+                'Generate AI Recommendations'
               )}
             </button>
           </div>
@@ -104,36 +97,35 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
 
   return (
     <div className="w-full max-w-4xl mx-auto mt-8 space-y-4">
-      <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-gray-900">
-            🤖 AI Recommendations
+          <h2 className="text-2xl font-semibold text-gray-900">
+            AI Recommendations
           </h2>
-          <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+          <span className="px-3 py-1 bg-green-50 text-green-700 rounded-lg text-sm font-medium border border-green-200">
             {recommendations.length} Opportunities Found
           </span>
         </div>
         <p className="text-gray-600 mb-6">
           Based on your process analysis, here are the top automation opportunities
-          ranked by potential impact:
+          ranked by potential impact.
         </p>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {recommendations.map((rec, index) => (
             <div
               key={index}
-              className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+              className="border border-gray-200 rounded-xl overflow-hidden transition-all hover:border-gray-300 shadow-sm hover:shadow-md"
             >
               <button
                 onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
                 className="w-full text-left"
               >
-                <div className="p-4 bg-gray-50 hover:bg-gray-100 transition-colors">
+                <div className="p-4 bg-white hover:bg-gray-50 transition-colors">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl">{impactIcons[rec.impact]}</span>
-                        <h3 className="text-lg font-semibold text-gray-900">
+                        <h3 className="text-base font-semibold text-gray-900">
                           {rec.title}
                         </h3>
                       </div>
@@ -142,11 +134,11 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
                       </p>
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${impactColors[rec.impact]}`}>
-                        {rec.impact.toUpperCase()} IMPACT
+                      <span className={`px-3 py-1 rounded-lg text-xs font-medium border ${impactColors[rec.impact]}`}>
+                        {rec.impact.toUpperCase()}
                       </span>
-                      <span className="text-sm font-semibold text-blue-600">
-                        ⏱️ {rec.timesSaved}
+                      <span className="text-sm font-medium text-gray-600">
+                        {rec.timesSaved}
                       </span>
                     </div>
                   </div>
@@ -154,17 +146,17 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
               </button>
 
               {expandedIndex === index && (
-                <div className="p-4 bg-white border-t border-gray-200 animate-in slide-in-from-top">
+                <div className="p-4 bg-gray-50 border-t border-gray-200">
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">
-                        Affected Activities:
+                      <h4 className="font-semibold text-gray-900 mb-2 text-sm">
+                        Affected Activities
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {rec.affectedActivities.map((activity, i) => (
                           <span
                             key={i}
-                            className="px-3 py-1 bg-blue-50 text-blue-700 rounded-md text-sm border border-blue-200"
+                            className="px-3 py-1 bg-white text-gray-700 rounded-lg text-sm border border-gray-200"
                           >
                             {activity}
                           </span>
@@ -173,19 +165,19 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
                     </div>
 
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">
-                        Implementation Approach:
+                      <h4 className="font-semibold text-gray-900 mb-2 text-sm">
+                        Implementation Approach
                       </h4>
-                      <p className="text-gray-700 text-sm bg-gray-50 p-3 rounded border border-gray-200">
+                      <p className="text-gray-700 text-sm bg-white p-3 rounded-lg border border-gray-200">
                         {rec.implementation}
                       </p>
                     </div>
 
-                    <div className="flex gap-3 pt-2">
-                      <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold">
+                    <div className="flex gap-2 pt-2">
+                      <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
                         Start Implementation
                       </button>
-                      <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm font-semibold">
+                      <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
                         Learn More
                       </button>
                     </div>
@@ -197,8 +189,8 @@ export default function AIRecommendations({ recommendations }: AIRecommendations
         </div>
 
         <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-sm text-blue-900">
-            <strong>💡 Pro Tip:</strong> Implementing these recommendations could save your team
+          <p className="text-sm text-gray-700">
+            <strong>Tip:</strong> Implementing these recommendations could save your team
             significant time each week and reduce process errors by up to 80%.
           </p>
         </div>
